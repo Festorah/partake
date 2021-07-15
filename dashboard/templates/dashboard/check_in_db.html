@@ -1,0 +1,139 @@
+{% extends "dashboard/dashboard_base.html" %}
+{% load static %}
+{% load mathfilters %}
+{% block content %}
+
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Events</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="#">Event</a></li>
+              <li class="breadcrumb-item active"><a href="{% url 'add_events' %}">Create Event</a></li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <!-- Default box -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Event</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i></button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fas fa-times"></i></button>
+                </div>
+              </div>
+                            <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <p class="text-center">
+                      <strong> <span> {{event.name}} </span> </strong>
+                    </p>
+                    <div class="table-responsive">
+                      
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <!-- <th scope="col">S/N</th> -->
+                            <th scope="col">Name</th>
+                            <th scope="col">Access</th>
+                            <th scope="col">Attendees</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Attendance</th>
+                          </tr>
+                        </thead>FKSTU
+                        <tbody>
+                        {% for check_in in check_ins %}
+                          <tr>
+                            <!-- <th scope="row">{{ check_in.count }}</th> -->
+                            <td>{{ check_in.name }}</td>
+                            <td>{{ check_in.access }}</td>
+                            <td>
+                              <p>{{ check_in.reg_attendee.all.count }}</p>
+                                <a href="{% url 'checkin-details' check_in.pk %}">See list</p>
+                            </td>
+                            <td>
+                             {{ check_in.date }}
+                             <form method="POST" action="{% url 'checkin-db' event.pk %}">
+                              {% csrf_token %}
+                              <!-- <label for="appt">Set time:</label> -->
+                              <!-- <input type="time" id="appt" name="appt"> -->
+                              <input style="display: none;" id="name" type="text" name="name" value="{{ check_in.name }}" />
+                              <input style="display: none;" id="start_date" type="hidden date" name="date"/>
+                              <!-- <input style="" id="start_date" type="text" name="mins"/> -->
+                              <select name="mins" type="text" class="c-form-profession form-control" id="c-form-profession">
+                                  <option value="{{ check_in.time_limit }}">{{ check_in.time_limit }}minutes Time Limit</option>
+                                  <option value="15">15 minutes</option>
+                                  <option value="30">30 minutes</option>
+                                  <option value="45">45 minutes</option>
+                              </select>
+                              <button type="submit">Set Time</button>
+                             </form>
+                            </td>
+                            <td>{{ check_in.reg_attendee.all.count }}</td>
+                          </tr>
+                        {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <!-- <div class="chart"> -->
+                      <!-- Sales Chart Canvas -->
+                      <!-- <canvas id="salesChart" height="180" style="height: 180px;"></canvas> -->
+                    <!-- </div> -->
+                    <!-- /.chart-responsive -->
+                  <!-- </div> -->
+                  <!-- /.col -->
+                  <div class="col-md-12">
+                    <p class="text-center">
+                      <strong>Attendance Analysis</strong>
+                    </p>
+                    {% for check_in in check_ins %}
+                    <div class="progress-group">
+                      {{ check_in.name }}
+                      <span class="float-right"><b>{{ check_in.reg_attendee.all.count }}</b>/{{ attendances.all.count }}</span>
+                      <div class="progress progress-sm">
+                        <div class="progress-bar bg-primary" style="width: {{ check_in.reg_attendee.all.count|div:attendances.all.count|mul:100 }}%;"></div>
+                      </div>
+                    </div>
+                    <!-- /.progress-group -->
+                    {% endfor %}
+
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- /.card-footer -->
+            </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+{% endblock content %}

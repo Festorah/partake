@@ -1,0 +1,272 @@
+{% load static %}
+{% load humanize %}
+{% load embed_video_tags %}
+<!-- {% load crispy_forms_tags %} -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>iClass | Event ChatRoom</title>
+    
+    <link  rel="icon" href="{% static 'events/assets/images/newlogo.jpg' %}">
+    <!-- Google fonts -->
+    <link href="//fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap" rel="stylesheet">
+
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="{% static 'events/assets/css/style-starter.css' %}">
+    <link rel="stylesheet" href="{% static 'events/assets/css/chat.css' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  </head>
+  <body>
+
+    <section class="w3l-header" style="padding-top: 0px;">
+        <div class="container">
+          <div class="logo text-center">
+            <a style="display: inline-flex; font-family: 'Poppins'; text-align: center; font-size: 60px; font-weight: bolder;" class="brand-logo" href="{% url 'home' %}">
+              <div style="margin: 0px; padding: 0px;" class="container">
+                <img src="{% static 'events/assets/images/pepbg.png' %}" alt="" />
+              </div>
+              <div style="margin: 0px; padding-left: 0px; padding-top: 20px;" class="container">
+                 iClass
+              </div>
+             
+            </a>
+          </div>
+        </div>
+    </section>
+
+{% for message in messages %}
+<div id="message_container" class="container-fluid p-0">
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+</div>
+{% endfor %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8" style="margin: auto;">
+      {% video event.video 'small' %}
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="wrapper wrapper-content animated fadeInRight">
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="ibox float-e-margins">
+                  <div class="ibox-content">
+                      <strong>{{event.name}} Chat room </strong>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="ibox chat-view">
+                  <div class="ibox-title">
+                      <small class="pull-right text-muted">Last message:  Mon Jun 06 2021 - 18:39:23</small> Chat room panel
+                  </div>
+                  <div class="ibox-content">
+                      <div class="row">
+                          <div class="col-md-10">
+                              <div class="chat-message" style="background: #eee;">
+                                  <div class="chat-message left">
+                                    <small><i class="fa fa-map-pin m-2" aria-hidden="true"></i> Pinned Message - Admin</small>
+                                      <img class="message-avatar" src="{% static 'events/assets/images/pepbg.png' %}" alt="">
+                                      <div class="message">
+                                          <span class="message-date"> {{event.date}} </span>
+                                          <span class="message-content">
+                                            {{event.chat_intro}}
+                                          </span>
+                                      </div>
+                                  </div>
+                                  
+                                  
+
+                                  {% for chat in chat_room %}
+                                  <form id="upvote" action="{% url 'upvote' event.slug %}" style="display: inline-block;" class="" method="POST">
+                                    {% csrf_token %}
+                                    <div id="msg-list" class="chat-message mr-5">
+                                      
+                                        <!-- <img class="message-avatar" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""> -->
+                                        <div class="message">
+                                            <a class="message-author" href="#"> {{chat.author}} </a>
+                                                  {{chat.message}}
+                                              <input id="upvote_count" name="upvote_count" value="{{chat.upvote}}" style="display: none;">
+                                              <input id="event" name="event" value="{{event.name}}" style="display: none;">
+                                              <input id="chati_message" name="chati_message" value="{{chat.message}}" style="display: none;">
+                                              <input id="chati_pk" name="chati_pk" value="{{chat.pk}}" style="display: none;">
+                                              <input id="user" name="user" value="{{user.name}}" style="display: none;">
+                                              <button type="submit"><span class="fa fa-arrow-up" aria-hidden="true"></span></button>
+                                            
+                                            <p id="upvote_count" style="display: inline-block;">{{chat.upvote}}upvotes</p>
+                                            <span class="message-date"> {{chat.date|timesince}} ago </span>
+                                        </div>
+                                      <!-- <input type="submit"> -->
+                                   
+                                    </div>
+                                  </form>
+                                {% endfor %}
+
+                                  <div class="container">
+                                    <form  id="chat_form" method="POST" style="display: inline-block;" class="">
+                                      {% csrf_token %}
+                                      <div class="message-area">
+                                        <textarea id="message" name="message" placeholder="Enter message text" style="width: 100%; border: 1px; border-color: #fff; padding-left: 25px;"></textarea>
+                                        <input id="event" name="event" value="{{event.name}}" style="display: none;">
+                                        <input id="userch" name="user" value="{{user.name}}" style="display: none;">
+                                        <input type="submit" class="m-3">
+                                      </div>
+                                    </form>
+                                  </div>
+                              </div>
+
+                          </div>
+                          <!-- <div class="col-md-3">
+                              <div class="chat-users">
+                                  <div class="users-list">
+                                    <h6 class="m-3" style="text-align: center;">Attendees</h6>
+                                    {% for attendee in attendees %}
+                                      <div class="chat-user">
+                                          <img class="chat-avatar" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                                          <div class="chat-user-name">
+                                              <a href="#">{{ attendee.name }} <p style="font-weight: bolder;">Online</p> </a>
+                                          </div>
+                                      </div>
+                                      {% endfor %}
+                                  </div>
+                              </div>
+                          </div> -->
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<footer class="w3l-footer-29-main" id="footer">
+     <div class="footer-29 py-5">
+       <div class="container pb-lg-3">
+         <div class="row footer-top-29">
+           <div class="col-lg-4 col-md-6 footer-list-29 footer-1 mt-md-4">
+             <a class="footer-logo mb-md-3 mb-2" href="#url"><img src="{% static 'events/assets/images/logo-icon.png' %}" alt="" />Skill</a>
+             <p>Committed to helping men realize their God-given dreams in life.</p>
+           </div>
+           <div class="col-lg-2 col-md-6 footer-list-29 footer-2 mt-5">
+            <h6 class="footer-title-29">Explore More</h6>
+             <ul>
+               <li><a href="#gallery.html">Gallery</a></li>
+               <li><a href="#courses.html">Courses</a></li>
+               <li><a href="#landing-single.html">Landing Page</a></li>
+               <li><a href="#signup.html">Apply Now</a></li>
+               <li><a href="contact.html">Buy Course Online</a></li>
+             </ul>
+           </div>
+           <div class="col-lg-2 col-md-6 footer-list-29 footer-4 mt-5">
+            <h6 class="footer-title-29">Quick Links</h6>
+             <ul>
+               <li><a href="index.html">Home</a></li>
+               <li><a href="about.html">About</a></li>
+               <li><a href="services.html">Services</a></li>
+               <li><a href="#blog.html"> Blog</a></li>
+               <li><a href="contact.html">Contact</a></li>
+             </ul>
+           </div>
+         </div>
+       </div>
+     </div>
+     <div id="footers14-block" class="py-3">
+       <div class="container">
+         <div class="footers14-bottom text-center">
+           <div class="social">
+             <a href="#facebook" class="facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
+             <a href="#google" class="google"><span class="fa fa-google-plus" aria-hidden="true"></span></a>
+             <a href="#twitter" class="twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
+             <a href="#instagram" class="instagram"><span class="fa fa-instagram" aria-hidden="true"></span></a>
+             <a href="#youtube" class="youtube"><span class="fa fa-youtube" aria-hidden="true"></span></a>
+           </div>
+           <div class="copyright mt-1">
+             <p>&copy; 2020 Skill. All Rights Reserved | Design by <a href="https://w3layouts.com/">W3Layouts</a></p>
+           </div>
+         </div>
+       </div>
+     </div>
+
+     <!-- move top -->
+     <button onclick="topFunction()" id="movetop" title="Go to top">
+       <span class="fa fa-angle-up" aria-hidden="true"></span>
+     </button>
+     <script src="{% static 'events/assets/js/jquery-3.3.1.min.js' %}"></script>
+     <script>
+       // When the user scrolls down 20px from the top of the document, show the button
+       window.onscroll = function () {
+         scrollFunction()
+       };
+
+       function scrollFunction() {
+         if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+           document.getElementById("movetop").style.display = "block";
+         } else {
+           document.getElementById("movetop").style.display = "none";
+         }
+       }
+
+       // When the user clicks on the button, scroll to the top of the document
+       function topFunction() {
+         document.body.scrollTop = 0;
+         document.documentElement.scrollTop = 0;
+       }
+     </script>
+     <!-- /move top -->
+
+
+     <!-- This is for making the messages to dissappear after 3 seconds -->
+     <script type="text/javascript">
+          var message_ele = document.getElementById("message_container");
+
+          setTimeout(function(){ 
+             message_ele.style.display = "none"; 
+          }, 3000);
+     </script>
+
+     <script type="text/javascript">
+          $(document).on('submit','#chat_form', function(e){
+            e.preventDefault();
+            console.log('getting')
+
+            $.ajax({
+              type:'POST',
+              url:'/chatroom_message/',
+              data:{
+                message:$('#message').val(),
+                event:$('#event').val(),
+                userch:$('#userch').val(),
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+              },
+              success:function(json){
+                console.log('yippee')
+                $('#message').val('');
+                console.log(json)
+                console.log('working')
+                $('#msg-list').append(
+                  '<div class="message mt-3"><a class="message-author" href="#">'+ json.author + '</a><span class="m-3">' + json.message + '</span></div>',
+                  );
+              }
+            });
+          });
+
+     </script>
+
+   </footer>
+   <!-- Footer -->

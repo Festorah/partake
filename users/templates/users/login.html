@@ -1,0 +1,68 @@
+{% extends "events/base_second.html" %}
+{% load static %}
+{% block title %} | Login Page {% endblock %}
+{% block logo %}
+    <img align="left" src="{% static 'events/assets/images/pep123_logo.png' %}" alt="" />
+{% endblock logo %}
+{% block content %}
+
+<body style="background-image: url('/static/events/assets/images/Form_bg.jpg');">
+<!-- <section class="w3l-header" style="padding-top: 50px;">
+    <div class="container">
+      <div class="logo text-center">
+        <a style="color: #fff; font-family: 'Poppins'; text-align: center; font-size: 60px; font-weight: bolder;" class="brand-logo" href="{% url 'home' %}">
+          <img src="{% static 'events/assets/images/pep123_logo.png' %}" alt="" />
+          iClass
+        </a>
+      </div>
+    </div>
+</section>
+ -->
+
+{% for message in messages %}
+<div id="message_container" class="container-fluid p-0">
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+</div>
+{% endfor %}
+
+<section class="w3l-header">
+    <div class="container">
+ <!-- Demo content-->
+        <div class="container">
+            <div style="text-align: center;" class="row">
+                <div class="col-lg-10 col-xl-7 mx-auto">
+                    <h1 style="font-family: 'Poppins'; color: #ff8f07; font-size: 40px;" class="">Login Page Here</h1>
+                    <p style="font-family: 'Poppins'; font-size: 20px; color: #fff" class="text-muted mt-4 mb-4">Fill the form to Login</p>
+                    <form action="{% url 'LoginPage' %}" method="POST">
+                      {% csrf_token %}
+                        <div style="padding-top: 50px;" class="form-group mb-4">
+                          <!-- <h6>Name</h6> -->
+                            <input id="inputEmail" type="text" name="username" placeholder="Username" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                        </div>
+                        <div class="form-group mb-4">
+                          <!-- <h6>Email</h6> -->
+                            <input id="inputEmail" type="password" name="password" placeholder="Password" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Login</button>
+                    </form>
+                    {{form.errors}}
+                    <h3 style="font-weight: bold;"> <a href="{% url 'reset_password' %}">Forgot your Password? </a> </h3>
+                </div>
+
+            </div>
+        </div><!-- End -->
+    </div>
+</section>
+<div style="height: 100px;"></div>
+<div></div>
+
+<!-- //breadcrum -->
+<div class="base">
+   
+</div>
+{% endblock %}

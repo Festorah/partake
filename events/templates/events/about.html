@@ -1,0 +1,83 @@
+{% extends "events/base.html" %}
+{% load static %}
+
+{% block title %}| About Page{% endblock %}
+
+{% block content %}
+<!-- breadcrum -->
+<section class="w3l-skill-breadcrum">
+  <div class="breadcrum">
+    <div class="container">
+      <p><a href="index.html">Home</a> &nbsp; / &nbsp; About</p>
+    </div>
+  </div>
+</section>
+<!-- //breadcrum -->
+<div class="w3l-faq-block">
+  <div class="container py-lg-5">
+    <div class="header-section mb-4">
+      <h3 class="text-center">Guide Content</h3>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="list-group" id="list-tab" role="tablist">
+          <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab"
+            aria-controls="home">Signing in to iClass</a>
+          <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab"
+            aria-controls="profile">live stream and session videos</a>
+          <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab"
+            aria-controls="messages">Use session Q&A</a>
+        </div>
+      </div>
+      <div class="col-md-8 mt-md-0 mt-5">
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+            <section class="w3l-faq" id="faq">
+              <div class="faq-page">
+                <ul>
+                  <li>
+                    <input type="checkbox" checked>
+                    <i></i>
+                    <h2>Create a password and type in your name and other info.</h2>
+                    <p>Edit your profile, to make it look nice <br>
+                      <img src="{% static 'events/assets/images/pgk.png' %}" class="img-fluid" alt="" />
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </section>
+          </div>
+          <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+            <section class="w3l-faq" id="faq">
+              <div class="faq-page">
+                <ul>
+                  <li>
+                    <input type="checkbox" checked>
+                    <i></i>
+                    <h2>Enter the email address you used for event registration.</h2>
+                    <p>To automatically log in to your event, please make sure to use the email you used when registering for the event.</p>
+                  </li>
+                </ul>
+              </div>
+            </section>
+          </div>
+          <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
+            <section class="w3l-faq" id="faq">
+              <div class="faq-page">
+                <ul>
+                  <li>
+                    <input type="checkbox" checked>
+                    <i></i>
+                    <h2>The app will automatically take you to the event chat page after signing in.</h2>
+                    <p>If your event has live streaming for sessions, we suggest that you use Chrome browser for the web app. Some streaming software may have compatibility issues with other browsers.</p>
+                  </li>
+                </ul>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}

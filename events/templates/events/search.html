@@ -1,0 +1,75 @@
+{% extends "events/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %} | Search Events{% endblock %}
+
+{% block logo %}
+    <img align="left" src="{% static 'events/assets/images/pepbg.png' %}" alt="" />
+{% endblock logo %}
+
+{% block content %}
+
+<section id="showcase-inner" class="container showcase-search text-white py-2">
+  <div class="container">
+    <div style="padding: 0 70px;" class="row text-center">
+      <div class="col-md-12">
+        <form action="{% url 'search' %}" method="get">
+          <!-- Form Row 1 -->
+          <div class="form-row">
+            <div class="col-md-8 mb-3" style="margin: auto; display: inline-flex;">
+              <label class="sr-only">Event</label>
+              <input type="text" name="name" class="form-control" placeholder="Event name">
+              <button class="btn btn-primary" type="submit" style="width: 200px;">Search</button>
+            </div>
+          </div>
+          
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="w3l-index5" id="about">
+  <div class="new-block py-5">
+    <div class="container py-lg-3">
+      <div class="header-section text-center">
+        <a href="./" class="btn btn-primary theme-button" style="font-family: 'Poppins'; font-size: 40px; padding: 10px;">Upcoming Events</a>
+      </div>
+      {% for event in events %}
+      <div style="cursor: pointer;" class="list-single-view mt-5">
+        <div class="row">
+          <div class="col-md-12 mt-3">
+            <div class="grids5-info">
+              <a href="{{ event.image.url }}" class="d-block zoom"><img src="{{ event.image.url }}" alt="" class="img-fluid news-image" /></a>
+              <div class="blog-info">
+                <p class="date">{{ event.start_date|date:"F d, Y" }} to {{ event.end_date|date:"F d, Y" }}</p>
+                <h4>{{ event.name }}</h4>
+                <p class="blog-text">{{ event.description }}</p>
+                <small>{{ event.attendee.all.count }} Registered</small>
+                <div class="d-block mt-3">
+                  <button class="btn btn-outline-primary mr-1">
+                    <a href="{% url 'chat-room' event.pk %}">Chat Room</a>
+                  </button>
+                  <button class="btn btn-outline-primary ml-1">
+                    <a href="{% url 'event_reg' event.pk %}">Register</a>
+                  </button>
+                  <button class="btn btn-outline-primary ml-1">
+                    <a href="{% url 'event-detail' event.slug %}">Event Page</a>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+
+
+{% endblock content %}
+
+

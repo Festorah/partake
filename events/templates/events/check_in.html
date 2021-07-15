@@ -1,0 +1,61 @@
+{% extends "events/base_second.html" %}
+{% load static %}
+{% block title %} | Check_in Page {% endblock %}
+{% block logo %}
+    <img align="left" src="{% static 'events/assets/images/pep123_logo.png' %}" alt="" />
+{% endblock logo %}
+{% block content %}
+
+<body style="background-image: url('/static/events/assets/images/events.jpg'); background-size: auto;">
+
+
+{% for message in messages %}
+<div id="message_container" class="container-fluid p-0">
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+</div>
+{% endfor %}
+
+
+<section class="w3l-header">
+    <div class="container">
+ <!-- Demo content-->
+        <div class="container mb-5">
+            <div style="text-align: center;" class="row">
+                <div class="col-lg-10 col-xl-7 mx-auto">
+                    <h1 style="font-family: 'Poppins'; font-size: 30px; font-weight: bold;" class="">Check In Page</h1>
+                    <p style="font-family: 'Poppins'; font-size: 20px;" class="mt-4 mb-4">Please provide the information required to check-in for your event</p>
+                    <form id="testing" method="POST" action="{% url 'check_in' %}">
+                      {% csrf_token %}
+                        <div style="padding-top: 10px;" class="form-group mb-4">
+                          <!-- <h6>Name</h6> -->
+                            <input id="name" type="text" name="name" placeholder="Your Name" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                        </div>
+                        <div class="form-group mb-4">
+                          <!-- <h6>Email</h6> -->
+                            <input id="email" type="email" name="email" placeholder="Email address" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                        </div>
+                        <div class="form-group mb-4">
+                          <!-- <h6>Verification Number</h5> -->
+                            <input id="pin" type="text" name="pin" placeholder="PIN" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                        </div>
+                        <div class="form-group mb-4">
+                          <!-- <h6>Verification Number</h5> -->
+                            <input id="organization" type="text" name="organization" placeholder="organization" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                            <input style="display: none;" id="start_date" type="hidden date" name="start_date"/>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Check_in</button>
+                    </form>
+                </div>
+            </div>
+        </div><!-- End -->
+    </div>
+</section>
+<div></div>
+<div></div>
+
+{% endblock %}

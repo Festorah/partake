@@ -1,0 +1,144 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>iClass |{% block title %}{% endblock %}</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'events/assets_event_detail/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'events/assets_event_detail/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'events/assets_event_detail/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'events/assets_event_detail/vendor/venobox/venobox.css' %}" rel="stylesheet">
+  <link href="{% static 'events/assets_event_detail/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+  <link href="{% static 'events/assets_event_detail/vendor/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+  <link href="{% static 'events/assets_event_detail/vendor/aos/aos.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'events/assets_event_detail/css/style.css' %}" rel="stylesheet">
+  {% block styles %}
+  {% endblock %}
+
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header">
+    <div class="container">
+
+      <div class="pull-left">
+        <!-- Uncomment below if you prefer to use a text logo -->
+         <h1 style="font-family: 'Poppins'; font-size: 70px; font-weight: bolder;"><a href="{% url 'home' %}" style="color: #fff;"><img src="{% static 'events/assets/images/pep123_logo.png' %}" alt="" title="">i<span>Class</span></a></h1>
+        <!-- <a href="index.html" class="scrollto"><img src="{% static 'events/assets_event_detail/img/logo.png' %}" alt="" title=""></a> -->
+      </div>
+
+      <nav id="nav-menu-container">
+        <ul class="nav-menu">
+          <li class="menu-active"><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#speakers">Speakers</a></li>
+          <li><a href="#schedule">Schedule</a></li>
+          <li><a href="#venue">Venue</a></li>
+          <li><a href="#hotels">Hotels</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li class="buy-tickets"><a href="#buy-tickets">Buy Tickets</a></li>
+        </ul>
+      </nav><!-- #nav-menu-container -->
+    </div>
+  </header><!-- End Header -->
+
+{% block content %}{% endblock %}
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 footer-info">
+            <img src="{% static 'events/assets/images/pep123_logo.png' %}" alt="TheEvenet">
+            <p>{{event.description}}</p>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="fa fa-angle-right"></i> <a href="#">Home</a></li>
+              <li><i class="fa fa-angle-right"></i> <a href="#">About us</a></li>
+              <li><i class="fa fa-angle-right"></i> <a href="#">Services</a></li>
+              <li><i class="fa fa-angle-right"></i> <a href="#">Terms of service</a></li>
+              <li><i class="fa fa-angle-right"></i> <a href="#">Privacy policy</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h4>Contact Us</h4>
+            <p>
+              Km 4, Gbongan-Osogbo expressway,<br>
+              Osogbo, Osun state.<br>
+              , Nigeria <br>
+              <strong>Phone:</strong> 090 900 310 591<br>
+              <strong>Email:</strong>lifeoasis@hotmail.com<br>
+            </p>
+
+            <div class="social-links">
+              <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+              <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+              <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+              <a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
+              <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong>iClass</strong>. All Rights Reserved
+      </div>
+    </div>
+  </footer><!-- End  Footer -->
+
+  <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
+  
+  <!-- This is for the bootstrap messages -->
+   <script type="text/javascript">
+          var message_ele = document.getElementById("message_container");
+
+          setTimeout(function(){ 
+             message_ele.style.display = "none"; 
+          }, 3000);
+   </script>
+  <!-- Vendor JS Files -->
+  <script src="{% static 'events/assets_event_detail/vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'events/assets_event_detail/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'events/assets_event_detail/vendor/jquery.easing/jquery.easing.min.js' %}"></script>
+  <script src="{% static 'events/assets_event_detail/vendor/venobox/venobox.min.js' %}"></script>
+  <script src="{% static 'events/assets_event_detail/vendor/owl.carousel/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'events/assets_event_detail/vendor/superfish/superfish.min.js' %}"></script>
+  <script src="{% static 'events/assets_event_detail/vendor/hoverIntent/hoverIntent.js' %}"></script>
+  <script src="{% static 'events/assets_event_detail/vendor/aos/aos.js' %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'events/assets_event_detail/js/main.js' %}"></script>
+
+</body>
+
+</html>

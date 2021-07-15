@@ -1,0 +1,133 @@
+{% extends "events/base.html" %}
+{% load static %}
+
+
+{% block title %}
+  | Upcoming Events
+{% endblock %}
+
+<!-- This is for the logo -->
+{% block logo %}
+    <img align="left" src="{% static 'events/assets/images/pepbg.png' %}" alt="" />
+{% endblock logo %}
+
+{% block content %}
+
+<section id="showcase-inner" class="container showcase-search text-white py-2">
+  <div class="container">
+    <div style="padding: 0 70px;" class="row text-center">
+      <div class="col-md-12">
+        <form action="{% url 'search' %}" method="get">
+          <!-- Form Row 1 -->
+          <div class="form-row">
+            <div class="col-md-8 mb-3" style="margin: auto; display: inline-flex;">
+              <label class="sr-only">Event</label>
+              <input type="text" name="name" class="form-control" placeholder="Event name">
+              <button class="btn btn-primary" type="submit" style="width: 200px;">Search</button>
+            </div>
+          </div>
+          
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="w3l-index5" id="about">
+  <div class="new-block py-5">
+    <div class="container py-lg-3">
+      <div class="header-section text-center">
+        <a href="{% url 'events-list' %}" class="btn btn-primary theme-button" style="font-family: 'Poppins'; font-size: 40px; padding: 10px;">Upcoming Events</a>
+      </div>
+      {% for event in events %}
+      <div style="cursor: pointer;" class="list-single-view mt-5">
+        <div class="row">
+          <div class="col-md-12 mt-3">
+            <div class="grids5-info">
+              <a href="{% static 'events/assets/images/banner.jpg' %}" class="d-block zoom"><img src="{% static 'events/assets/images/banner.jpg' %}" alt="" class="img-fluid news-image" /></a>
+              <div class="blog-info">
+                <p class="date">{{ event.start_date|date:"F d, Y" }} to {{ event.end_date|date:"F d, Y" }}</p>
+                <h4>{{ event.name }}</h4>
+                <p class="blog-text">{{ event.description }}</p>
+                <small>{{ event.attendee.all.count }} Registered</small>
+                <div class="d-block mt-3">
+                  <button class="btn btn-outline-primary mr-1">
+                    <a href="{% url 'chat-room' event.pk %}">Chat Room</a>
+                  </button>
+                  <button class="btn btn-outline-primary ml-1">
+                    <a href="{% url 'event_reg' event.pk %}">Register</a>
+                  </button>
+                  <button class="btn btn-outline-primary ml-1">
+                    <a href="{% url 'event-detail' event.slug %}">Event Page</a>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+
+<!-- stats -->
+<section class="w3l-stats py-lg-5 py-4" id="stats">
+  <div class="gallery-inner container py-md-5 py-4">
+    <div class="row stats-con text-white">
+      <div class="col-md-3 col-6 stats_info counter_grid">
+        <span class="fa fa-smile-o"></span>
+        <p class="counter">196</p>
+        <h4>Events</h4>
+      </div>
+      <div class="col-md-3 col-6 stats_info counter_grid1">
+        <span class="fa fa-graduation-cap"></span>
+        <p class="counter">96</p>
+        <h4>Sections</h4>
+      </div>
+      <div class="col-md-3 col-6 stats_info counter_grid mt-md-0 mt-5">
+        <span class="fa fa-history"></span>
+        <p class="counter">25</p>
+        <h4>Seminars</h4>
+      </div>
+      <div class="col-md-3 col-6 stats_info counter_grid2 mt-md-0 mt-5">
+        <span class="fa fa-users"></span>
+        <p class="counter">890</p>
+        <h4>Registered Attendees</h4>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- //stats -->
+
+<section class="w3l-subscribe">
+  <div class="subscription-infhny">
+    <div class="container-fluid">
+      <div class="subscription-grids row">
+        <div class="subscription-right form-right-inf col-lg-6 p-md-5 p-4">
+          <div class="px-lg-5 py-md-0 py-3">
+            <div class="header-section">
+              <h3>Join us for FREE to get instant <span>email updates!</span></h3>
+              <p class="mt-3">Subscribe and get notified at first on the latest update and offers!</p>
+            </div>
+            <form action="#" method="post" class="signin-form mt-lg-5 mt-4">
+              <div class="forms-gds">
+                <div class="form-input">
+                  <input type="email" name="" placeholder="Your email here" required="">
+                </div>
+                <div class="form-input"><button class="btn btn-primary theme-button">Subscribe</button></div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="subscription-left forms-25-info col-lg-6 ">
+
+        </div>
+      </div>
+    </div>
+</section>
+
+{% endblock content %}
+
+

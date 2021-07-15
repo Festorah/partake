@@ -1,0 +1,72 @@
+{% extends "events/base_second.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} | Sign Up Page {% endblock %}
+{% block logo %}
+    <img align="left" src="{% static 'events/assets/images/pep123_logo.png' %}" alt="" />
+{% endblock logo %}
+
+{% block content %}
+<body style="background-image: url('/static/events/assets/images/Form_bg.jpg');">
+
+
+{% if messages %}
+  <div class="container">
+    {% for message in messages %}
+      <div class="alert alert-success" role="alert">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+<section class="w3l-header signup">
+    <div class="container">
+ <!-- Demo content-->
+        <div class="container">
+            <div style="text-align: center;" class="row">
+                <div class="col-lg-10 col-xl-7 mx-auto">
+                    <h1 style="font-family: 'Poppins'; font-size: 40px; color: white;" class="">Sign Up</h1>
+                    <p style="font-family: 'Poppins'; color: white; font-size: 20px;" class="mt-4 mb-4">Fill the form to continue with us</p>
+                    <form action="{% url 'home' %}" method="POST">
+                      {% csrf_token %}
+                        <div style="padding-top: 50px;" class="form-group mb-4">
+                          <!-- <h6>Name</h6> -->
+                            {{form.username}}
+                        </div>
+                        <div class="form-group mb-4">
+                          <!-- <h6>Email</h6> -->
+                            {{form.email}}
+                        </div>
+                        <div class="form-group mb-4">
+                          <!-- <h6>Password</h5> -->
+                            {{form.first_name}}
+                        </div>
+                        <div class="form-group mb-4">
+                          <!-- <h6>Email</h6> -->
+                            {{form.last_name}}
+                        </div>
+                        <div class="form-group mb-4">
+                          <!-- <h6>Password</h5> -->
+                            {{form.password1}}
+                        </div>
+                        <div class="form-group mb-4">
+                          {{form.password2}}
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Sign Up</button>
+                    </form>
+                    {{form.errors}}
+                    <div class="mt-4">
+                      <div class="d-flex justify-content-center links">
+                        Already have an account? <span> </span><a href="{% url 'LoginPage' %}"> Login</a>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End -->
+    </div>
+</section>
+<div style="height: 100px;"></div>
+<div></div>
+
+{% endblock %}
+

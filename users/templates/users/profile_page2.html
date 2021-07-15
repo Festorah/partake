@@ -1,0 +1,188 @@
+ {% extends "events/base_second.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+  {{user.username}}'s Profile Page
+{% endblock %}
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'events/assets/css/chat.css' %}">
+{% endblock %}
+{% block logo %}
+    <img align="left" src="{% static 'events/assets/images/pepbg.png' %}" alt="" />
+{% endblock logo %}
+{% block content %}
+
+
+{% for message in messages %}
+<div id="message_container" class="container-fluid p-0">
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+</div>
+{% endfor %}
+
+<section class="w3l-header">
+    <div class="container">
+        <div class="main-body">
+    
+          <!-- Breadcrumb -->
+          <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item ml-3"><a href="{% url 'home' %}">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Profile</li>
+              {% if perms.branch_operations.add_convert %}
+              <li class="breadcrumb-item"><a href="{% url 'dashboard-home' %}"> Main Dashboard </a></li>
+              {% endif %}
+              <li style="display: flex;" class="breadcrumb-item active ml-auto" aria-current="page" >Welcome {{user.username}}</li>
+              {% if perms.branch_operations.add_convert %}
+              <li style="display: inline-flex;" class="breadcrumb-item"><a href="{% url 'branch-dashboard' %}">{{ user.profile.church_branch }}Dashboard </a></li>
+              {% endif %}
+              <li style="display: inline-flex;" class="breadcrumb-item"><a href="{% url 'LogoutPage' %}"> Logout</a></li>
+            </ol>
+          </nav>
+          <!-- /Breadcrumb -->
+    
+          <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    <img src="{% static 'events/assets/images/default.png' %}" alt="Admin" class="rounded-circle" width="200">
+                    <div class="mt-3">
+                      <h4>{{user.username}}</h4>
+                      <p class="text-secondary mb-1">{{ user.profile.position }}</p>
+                      <p class="text-muted font-size-sm">{{ user.profile.address }}</p>
+                      <a href="{% url 'check_in' %}">
+                        <button class="btn btn-outline-primary">Check_in</button>
+                      </a>
+                      <a href="{% url 'events-list' %}">
+                        <button class="btn btn-outline-primary">Register for Event</button>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h4 style="text-align: center; margin: 10px;">Update Profile</h4>
+              <div class="card mt-2">
+                  <div class="container">
+                    <form action="{% url 'profile_page' %}" method="POST" enctype="multipart/form-data">
+                      {% csrf_token %}
+                        <div class="form-group mb-4 mt-4">
+                          <!-- <h6>Email</h6> -->
+                            {{ u_form|crispy }}
+                            {{ p_form|crispy }}
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block text-uppercase mb-1 rounded-pill shadow-sm">Edit Profile</button>
+                        <div class="text-center d-flex justify-content-between mt-4"><p>Snippet by <a href="https://bootstrapious.com/snippets" class="font-italic text-muted"> 
+                                <u>Boostrapious</u></a></p></div>
+                    </form>
+                  </div><!-- End -->
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Full Name</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ user.username }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Email</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ user.email }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Position</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ user.profile.position }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Church Branch</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ user.profile.church_branch }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Address</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ user.profile.address }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row gutters-sm">
+                <div class="col-sm-12 mb-3">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Registered</i>Event</h6>
+                      {% for event in reg_event_names %}
+                      <small>{{ event }}</small>
+                      <div></div>
+                      <!-- <div class="progress mb-3" style="height: 5px"> -->
+                        <!-- <div class="progress-bar bg-primary" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div> -->
+                      <!-- </div> -->
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 mb-3">
+                  <div class="card h-100">
+                    <div class="card-body mr-2">
+                      <h5 class="d-flex"><i class="material-icons text-info mr-2">Connect to our 24 hours online streaming for Schools of the Kingdom</i></h5>
+                      <h6 class="m-2" style="display: inline-flex;" >Healing School</h6>
+                      <button  class="btn btn-primary float-right" style="height: 30px; display: inline-flex;">Connect</button>
+                      <div>
+                        <div></div>
+                      </div>
+                      <h6 class="m-2" style="display: inline-flex;" >Prayer School</h6>
+                      <button  class="btn btn-primary float-right" style="height: 30px; display: inline-flex;">Connect</button>
+                      <div>
+                        <div></div>
+                      </div>
+                      <h6 class="m-2" style="display: inline-flex;" >School of Wealth</h6>
+                      <button  class="btn btn-primary float-right" style="height: 30px; display: inline-flex;">Connect</button>
+                      <div>
+                        <div></div>
+                      </div>
+                      <h6 class="m-2" style="display: inline-flex;" >Deliverance clinic</h6>
+                      <button  class="btn btn-primary float-right" style="height: 30px; display: inline-flex;">Connect</button>
+                      <div>
+                        <div></div>
+                      </div>
+                      <h6 class="m-2" style="display: inline-flex;" >Intimacy</h6>
+                      <button  class="btn btn-primary float-right" style="height: 30px; display: inline-flex;">Connect</button>
+                      <div>
+                        <div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

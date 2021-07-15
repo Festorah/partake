@@ -1,0 +1,191 @@
+{% extends "branch_operations/dashboard_br_base.html" %}
+{% load static %}
+{% block content %}
+
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1><strong>{{request.user.profile.church_branch}}</strong></h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="#">Event</a></li>
+              <li class="breadcrumb-item active"><a href="{% url 'add_events' %}">Create Event</a></li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <!-- Default box -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Title</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i></button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fas fa-times"></i></button>
+                </div>
+              </div>
+                            <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <p class="text-center">
+                      <strong>{{service_name}} </strong>
+                    </p>
+                    <div class="table-responsive">
+                      
+                      <table class="table">
+                        <thead>
+
+                          <tr>
+                            <th scope="col">S/N</th>
+                            <th scope="col">Pastor</th>
+                            <th scope="col">Men</th>
+                            <th scope="col">Women</th>
+                            <th scope="col">Brothers</th>
+                            <th scope="col">Sisters</th>
+                            <th scope="col">Teenagers</th>
+                            <th scope="col">Children</th>
+                            <th scope="col">Service Report</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for service_detail in service_attendance %}
+                          <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{service_detail.pastor}}</td>
+                            <td class="text-center">{{service_detail.men}}</td>
+                            <td>{{service_detail.women}}</td>
+                            <td>{{service_detail.brothers}}</td>
+                            <td>{{service_detail.sisters}}</td>
+                            <td>{{service_detail.teenagers}}</td>
+                            <td>{{service_detail.children}}</td>
+                            <td>{{service_detail.pastors_comments}}</td>
+                          </tr>
+                        {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <!-- <div class="chart"> -->
+                      <!-- Sales Chart Canvas -->
+                      <!-- <canvas id="salesChart" height="180" style="height: 180px;"></canvas> -->
+                    <!-- </div> -->
+                    <!-- /.chart-responsive -->
+                  <!-- </div> -->
+                  <!-- /.col -->
+                  <div class="col-md-12">
+                    <p class="text-center">
+                      <strong>Attendance Analysis</strong>
+                    </p>
+
+                    <div class="progress-group">
+                      Day 1
+                      <span class="float-right"><b>160</b>/200</span>
+                      <div class="progress progress-sm">
+                        <div class="progress-bar bg-primary" style="width: 80%"></div>
+                      </div>
+                    </div>
+                    <!-- /.progress-group -->
+
+                    <div class="progress-group">
+                      Day 2
+                      <span class="float-right"><b>310</b>/400</span>
+                      <div class="progress progress-sm">
+                        <div class="progress-bar bg-danger" style="width: 75%"></div>
+                      </div>
+                    </div>
+
+                    <!-- /.progress-group -->
+                    <div class="progress-group">
+                      <span class="progress-text">Day 3</span>
+                      <span class="float-right"><b>480</b>/800</span>
+                      <div class="progress progress-sm">
+                        <div class="progress-bar bg-success" style="width: 60%"></div>
+                      </div>
+                    </div>
+
+                    <!-- /.progress-group -->
+                    <div class="progress-group">
+                      Day 4
+                      <span class="float-right"><b>250</b>/500</span>
+                      <div class="progress progress-sm">
+                        <div class="progress-bar bg-warning" style="width: 50%"></div>
+                      </div>
+                    </div>
+                    <!-- /.progress-group -->
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- ./card-body -->
+              <div class="card-footer">
+                <div class="row">
+                  <div class="col-sm-3 col-6">
+                    <div class="description-block border-right">
+                      <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 17%</span>
+                      <h5 class="description-header">$35,210.43</h5>
+                      <span class="description-text">TOTAL REVENUE</span>
+                    </div>
+                    <!-- /.description-block -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-sm-3 col-6">
+                    <div class="description-block border-right">
+                      <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i> 0%</span>
+                      <h5 class="description-header">$10,390.90</h5>
+                      <span class="description-text">TOTAL COST</span>
+                    </div>
+                    <!-- /.description-block -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-sm-3 col-6">
+                    <div class="description-block border-right">
+                      <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 20%</span>
+                      <h5 class="description-header">$24,813.53</h5>
+                      <span class="description-text">TOTAL PROFIT</span>
+                    </div>
+                    <!-- /.description-block -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-sm-3 col-6">
+                    <div class="description-block">
+                      <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i> 18%</span>
+                      <h5 class="description-header">1200</h5>
+                      <span class="description-text">GOAL COMPLETIONS</span>
+                    </div>
+                    <!-- /.description-block -->
+                  </div>
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- /.card-footer -->
+            </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+{% endblock content %}

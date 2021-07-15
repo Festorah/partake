@@ -1,0 +1,39 @@
+    <section class="inner-page">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <center>
+              <h1 style="font-size: 30px; padding: 50px; margin-top: 50px;" class="mb-5"><strong>EVENT - {{check_ins.event}}</strong></h1>
+            </center>
+            <div class="m-5">
+              <h2 style="text-align: center; font-size: 20px;"><ins> {{check_ins.name}} Attendees</ins></h2>
+            </div>
+
+            <div style="margin: 10px;" class="container">
+              <table style="" class="table table-borderless">
+                <thead>
+                  <tr style="font-size: 16px; margin: 10px; padding: 10px;">
+                    <th scope="col">S/N</th>
+                    <th scope="col" style="text-align: left;">Name</th>
+                  </tr>
+                  {% for partaker in check_ins.reg_attendee.all %}
+                  <tr style="font-size: 15px; margin: 10px;">
+                    <th scope="col" style="text-align: center;">{{ forloop.counter }}.</th>
+                    <th scope="col" style="text-align: left;">{{ partaker.name }}</th>
+                  </tr>
+                  {% endfor %}
+                </thead>
+              </table>
+              <center><h1 class="text-center" style="padding-top: 20px;"> This is the list of the participants that checked-in for {{check_ins.event}} - {{check_ins.name}}</h1></center>
+            </div>
+
+
+          </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </section>
+

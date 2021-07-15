@@ -1,0 +1,43 @@
+{% extends "events/formbase.html" %}
+{% load static %}
+{% block title %} | Attend Page {% endblock %}
+{% block content %}
+
+<section class="w3l-header">
+    <div class="container">
+      <div class="logo text-center">
+        <a style="font-family: 'Poppins'; text-align: center; font-size: 40px; font-weight: bolder;" class="brand-logo" href="{% url 'home' %}">
+          <img src="{% static 'events/assets/images/pep_logo.png.png' %}" alt="" />
+          iClass
+        </a>
+      </div>
+    </div>
+</section>
+
+<!-- breadcrum -->
+<section class="attend">
+  <h2>Attendance</p>
+  <h6>To continue with Us</h6>
+  <form action="{% url 'home' %}" method="POST">
+    {% csrf_token %}
+      <div class="forms-gds">
+        <div class="form-input">
+          <input type="text" name="" placeholder="Name" required="">
+          <input type="text" name="" placeholder="Email address" required="">
+          <input type="text" name="" placeholder="Organization" required="">
+          <input type="text" name="" placeholder="Event" required="">
+          <input type="text" name="" placeholder="Password" required="">
+        </div>
+        <div class="form-input">
+          <button class="btn btn-primary theme-button">Attend</button>
+        </div>
+      </div>
+      
+  </form>
+</section>
+<!-- //breadcrum -->
+<div class="base">
+   
+</div>
+{% endblock %}
+  

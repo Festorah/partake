@@ -1,0 +1,132 @@
+{% load static %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>iClass {% block title %}{% endblock %}</title>
+    <link  rel="icon" href="{% static 'events/assets/images/pepbg.png' %}">
+
+    <!-- Google fonts -->
+    <link href="//fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap" rel="stylesheet">
+
+    <link href="{% static 'events/assets/images/pepbg.png' %}" rel="icon">
+
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="{% static 'events/assets/css/style-starter.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'events/assets/css/form.css' %}"> -->
+
+    <style type="text/css">
+      #customAlert {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 999;
+        background-color: rgba(255,255,255,0.75);
+      }
+      #box {
+        border-radius: 5px;
+        margin-top: 300px;
+        margin-left: 400px;
+        height: 150px;
+        width: 500px;
+        text-align: center;
+        box-shadow: 2px 2px 8px black;
+        background-color: white;
+      }
+      .heading{
+        background-color: #339966;
+        color: white;
+        font-size: larger;
+        padding: 5px;
+      }
+      .content {
+        margin-top: 30px;
+      }
+      #confirmbtn{
+        height: 25px;
+        width: 80px;
+        border-radius: 8px;
+        background-color: #339966;
+        color: white;
+        cursor: pointer;
+        margin-top: 20px;
+        margin-left: 400px;
+      }
+
+    </style>
+  </head>
+  
+{% block content %}
+{% endblock content %}
+   <!-- footer -->
+   <footer class="w3l-footer-29-main" id="footer">
+     <!-- move top -->
+     <button onclick="topFunction()" id="movetop" title="Go to top">
+       <span class="fa fa-angle-up" aria-hidden="true"></span>
+     </button>
+     <script>
+       // When the user scrolls down 20px from the top of the document, show the button
+       window.onscroll = function () {
+         scrollFunction()
+       };
+
+       function scrollFunction() {
+         if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+           document.getElementById("movetop").style.display = "block";
+         } else {
+           document.getElementById("movetop").style.display = "none";
+         }
+       }
+
+       // When the user clicks on the button, scroll to the top of the document
+       function topFunction() {
+         document.body.scrollTop = 0;
+         document.documentElement.scrollTop = 0;
+       }
+     </script>
+     <!-- /move top -->
+
+   </footer>
+   <!-- Footer -->
+
+   <!-- jQuery and Bootstrap JS -->
+   <script src="{% static 'events/assets/js/jquery-3.3.1.min.js' %}"></script>
+   <script src="{% static 'events/assets/js/bootstrap.min.js' %}"></script>
+
+   <!-- Template JavaScript -->
+
+   <!-- stats number counter-->
+   <script src="{% static 'events/assets/js/jquery.waypoints.min.js' %}"></script>
+   <!-- <script src="{% static 'events/assets/js/jquery.countup.js' %}"></script> -->
+   <script>
+     $('.counter').countUp();
+   </script>
+   <!-- //stats number counter -->
+
+
+   <!-- testimonials owlcarousel -->
+   <!-- <script src="{% static 'events/assets/js/owl.carousel.js' %}"></script> -->
+   <script>
+     document.getElementById('start_date').value = Date();
+   </script>
+
+
+   <!-- disable body scroll which navbar is in active -->
+   <script>
+     $(function () {
+       $('.navbar-toggler').click(function () {
+         $('body').toggleClass('noscroll');
+       })
+     });
+   </script>
+   <!-- disable body scroll which navbar is in active -->
+
+   </body>
+
+   </html>

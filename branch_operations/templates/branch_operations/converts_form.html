@@ -1,0 +1,58 @@
+{% extends "events/formbase.html" %}
+{% load static %}
+{% block title %} | Covert's Form Page {% endblock %}
+{% block content %}
+<body style="background-image: url('/static/events/assets/images/events.jpg'); background-size: auto;">
+
+<section class="w3l-header">
+    <div class="container">
+      <div style="padding: 10px;" class="logo text-center">
+        <a style="font-family: 'Poppins'; text-align: center; font-size: 50px; font-weight: bolder;" class="brand-logo" href="{% url 'home' %}">
+          <img src="{% static 'events/assets/images/pep_logo.png' %}" alt="" />
+          iClass
+        </a>
+      </div>
+    </div>
+</section>
+
+{% if messages %}
+  <div class="container">
+    {% for message in messages %}
+      <div class="alert alert-success" role="alert">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<section class="w3l-header">
+    <div class="container">
+ <!-- Demo content-->
+        <div class="container">
+            <div style="text-align: center;" class="row">
+                <div class="col-lg-10 col-xl-7 mx-auto">
+                    <h1 style="font-family: 'Poppins'; font-size: 40px;" class="">Coverts Form</h1>
+                    <p style="font-family: 'Poppins'; font-size: 20px;" class="text-muted mt-4 mb-4">Convert's Form: Please provide the new Convert's information below</p>
+                    <form action="#" method="POST">
+                      {% csrf_token %}
+                        <div style="padding-top: 50px;" class="form-group mb-4">
+                          <!-- <h6>Name</h6> -->
+                            {{ c_form }}
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Send Report</button>
+                    </form>
+                    {{form.errors}}
+                    <div class="mt-4">
+                      <div class="d-flex justify-content-center links">
+                        Want to send report for today's service?<span> </span><a href="#"> Service Report</a>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End -->
+    </div>
+</section>
+<div></div>
+<div></div>
+
+{% endblock %}

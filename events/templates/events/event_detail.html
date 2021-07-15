@@ -1,0 +1,67 @@
+{% extends "events/base.html" %}
+{% load static %}
+{% block content %}
+
+{% if messages %}
+  <div class="container">
+    {% for message in messages %}
+      <div class="alert alert-success" role="alert">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<section class="w3l-index5" id="about">
+  <div class="new-block py-5">
+    <div class="container py-lg-3">
+      <div class="list-single-view mt-5">
+        <div class="row">
+          <div class="col-md-12 mt-3">
+            <div class="grids5-info">
+              <a href="{{ event.image.url }}" class="d-block zoom mt-5"><img src="{{ event.image.url }}" alt="" class="img-fluid news-image" /></a>
+              <div class="blog-info">
+                <h3>{{ event.name }}</h3>
+                <p style="text-align: center;" class="date">{{ event.start_date|date:"F d, Y" }} to {{ event.end_date|date:"F d, Y" }}</p>
+                <p class="blog-text">{{event.description}}</p>
+                <small>{{ event.attendee.all.count }} Registered</small>
+                <a href="{% url 'event_reg' event.pk %}">
+                        <button class="btn btn-outline-primary">Register for Event</button>
+                      </a>
+                <a href="{% url 'chat-room' event.pk %}">
+                        <button class="btn btn-outline-primary">Room</button>
+                      </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- stats -->
+<div class="container">
+  <div class="col-md-8" style="margin: auto;">
+    <form id="testing" method="POST" action="{% url 'chat-room' event.pk %}">
+      {% csrf_token %}
+        <div class="form-group mb-4">
+          <!-- <h6>Email</h6> -->
+            <input id="email" type="email" name="email" placeholder="Email address" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+        </div>
+        <div class="form-group mb-4">
+          <!-- <h6>Verification Number</h5> -->
+            <input id="chat_pass" type="text" name="chat_pass" placeholder="Chat Pass" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+        </div>
+        <div class="form-group mb-4">
+          <!-- <h6>Verification Number</h5> -->
+            <input id="organization" type="text" name="organization" placeholder="organization" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Enter Room</button>
+    </form>
+  </div>
+</div>
+
+
+{% endblock content %}
+
+

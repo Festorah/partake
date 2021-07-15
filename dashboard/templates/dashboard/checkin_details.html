@@ -1,0 +1,100 @@
+{% extends "dashboard/dashboard_base.html" %}
+{% load static %}
+{% load mathfilters %}
+{% block content %}
+
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Events</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="#">Event</a></li>
+              <li class="breadcrumb-item active"><a href="{% url 'add_events' %}">Create Event</a></li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <!-- Default box -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Event</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i></button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fas fa-times"></i></button>
+                </div>
+              </div>
+                            <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <p class="text-center">
+                      <strong> <span> {{check_ins.event}} - {{check_ins.name}} Attendees </span> </strong>
+                    </p>
+                    <div class="table-responsive">
+                      
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">S/N</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for partaker in check_ins.reg_attendee.all %}
+                          <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ partaker.name }}</td>
+                            <td>{{ partaker.email }}</td>
+                          </tr>
+                        {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                    <center>
+                      <button type="button" class="btn btn-primary m-4"><a style="color: #ffffff" href="{% url 'render-pdf-view' check_ins.pk %}"> Download PDF</a></button>
+                    </center>
+
+                    <!-- <div class="chart"> -->
+                      <!-- Sales Chart Canvas -->
+                      <!-- <canvas id="salesChart" height="180" style="height: 180px;"></canvas> -->
+                    <!-- </div> -->
+                    <!-- /.chart-responsive -->
+                  <!-- </div> -->
+                  <!-- /.col -->
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- /.card-footer -->
+            </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+{% endblock content %}

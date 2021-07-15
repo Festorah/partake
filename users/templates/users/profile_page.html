@@ -1,0 +1,465 @@
+{% load static %}
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>iClass | {{user.username}}'s Profile Page</title>
+    <link  rel="icon" href="{% static 'dashboard/dist/img/newlogo.jpg' %}">
+    <!-- Google fonts -->
+    <link href="//fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap" rel="stylesheet">
+
+    <!-- Template CSS -->
+
+    <link rel="stylesheet" href="{% static 'events/assets/css/style-starter.css' %}">
+    <link rel="stylesheet" href="{% static 'events/assets/css/chat.css' %}">
+  </head>
+  <body>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="header">
+      <div class="container">
+
+        <nav class="navbar navbar-expand-lg navbar-light py-md-2 py-0 px-0">
+
+          <h1 class="navbar-brand"><a style="margin: auto; font-family: 'Poppins'; font-size: 70px; font-weight: bolder; color: black;" href="index.html"><img src="{% static 'events/assets/images/pepbg.png' %}" alt="" title="" /><span>i</span>Class</a></h1>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto" style="font-weight: bold;">
+              <li class="nav-item @@home-active"><a class="nav-link" href="{% url 'home' %}">HOME</a></li>
+              <li class="nav-item @@home"><a class="nav-link" href="{% url 'about' %}">ABOUT</a></li>
+              <li class="nav-item @@home"><a class="nav-link" href="{% url 'events-list' %}">UPCOMING EVENTS</a></li>
+              <li class="nav-item @@home"><a class="nav-link" href="{% url 'check_in' %}">CHECK_IN</a></li>
+            </ul>
+          </div>
+        </nav><!-- #nav-menu-container -->
+      </div>
+    </header><!-- End Header -->
+
+
+{% for message in messages %}
+<div id="message_container" class="container-fluid p-0">
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+</div>
+{% endfor %}
+
+<section class="w3l-header">
+    <div class="container">
+        <div class="main-body">
+    
+          <!-- Breadcrumb -->
+          <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item ml-3"><a href="{% url 'home' %}">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Profile</li>
+              <li style="display: flex;" class="breadcrumb-item active ml-auto" aria-current="page" >Welcome {{user.username}}</li>
+              {% if perms.branch_operations.add_convert %}
+              <li style="display: inline-flex;" class="breadcrumb-item"><a href="{% url 'branch-dashboard' %}">{{ user.profile.church_branch }}Dashboard </a></li>
+              {% endif %}
+              <li style="display: inline-flex;" class="breadcrumb-item"><a href="{% url 'LogoutPage' %}"> Logout</a></li>
+            </ol>
+          </nav>
+          <!-- /Breadcrumb -->
+    
+          <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    <img src="{{ user.profile.image.url }}" alt="Admin" class="rounded-circle" width="200">
+                    <div class="mt-3">
+                      <h4>{{user.username}}</h4>
+                      <p class="text-secondary mb-1">{{ user.profile.position }}</p>
+                      <p class="text-muted font-size-sm">{{ user.profile.address }}</p>
+                      <a href="{% url 'check_in' %}">
+                        <button class="btn btn-outline-primary">Check_in</button>
+                      </a>
+                      <a href="{% url 'events-list' %}">
+                        <button class="btn btn-outline-primary">Register for Event</button>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h4 style="text-align: center; margin: 10px;">Update Profile</h4>
+              <div class="card mt-2">
+                  <div class="container">
+                    <form action="{% url 'profile_page' %}" method="POST" enctype="multipart/form-data">
+                      {% csrf_token %}
+                        <div class="form-group mb-4 mt-4">
+                          <!-- <h6>Email</h6> -->
+                            {{ u_form|crispy }}
+                            {{ p_form|crispy }}
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block text-uppercase mb-1 rounded-pill shadow-sm">Edit Profile</button>
+                        <div class="text-center d-flex justify-content-between mt-4"><p>Snippet by <a href="https://bootstrapious.com/snippets" class="font-italic text-muted"> 
+                                <u>Boostrapious</u></a></p></div>
+                    </form>
+                  </div><!-- End -->
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Full Name</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ user.username }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Email</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ user.email }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Position</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ user.profile.position }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Church Branch</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ user.profile.church_branch }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Address</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ user.profile.address }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row gutters-sm">
+                <div class="col-sm-6 mb-3">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">assignment</i>Project Status</h6>
+                      <small>Web Design</small>
+                      <div class="progress mb-3" style="height: 5px">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                      <small>Website Markup</small>
+                      <div class="progress mb-3" style="height: 5px">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                      <small>One Page</small>
+                      <div class="progress mb-3" style="height: 5px">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                      <small>Mobile Template</small>
+                      <div class="progress mb-3" style="height: 5px">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                      <small>Backend API</small>
+                      <div class="progress mb-3" style="height: 5px">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 mb-3">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">assignment</i>Project Status</h6>
+                      <small>Web Design</small>
+                      <div class="progress mb-3" style="height: 5px">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                      <small>Website Markup</small>
+                      <div class="progress mb-3" style="height: 5px">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                      <small>One Page</small>
+                      <div class="progress mb-3" style="height: 5px">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                      <small>Mobile Template</small>
+                      <div class="progress mb-3" style="height: 5px">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                      <small>Backend API</small>
+                      <div class="progress mb-3" style="height: 5px">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row gutters-sm mb-5">
+                <div class="col-md-12 mb-3">
+                  <h4 style="text-align: center; margin: 10px;">Upcoming Events</h4>
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">School of the Calling</i>May - Our Month of the Calling</h6>
+                      <small>Web Design</small>
+                      <div class="progress mb-3" style="height: 5px">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                      <small>Website Markup</small>
+                      <div class="progress mb-3" style="height: 5px">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                      <small>One Page</small>
+                      <div class="progress mb-3" style="height: 5px">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                      <small>Mobile Template</small>
+                      <div class="progress mb-3" style="height: 5px">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                      <small>Backend API</small>
+                      <div class="progress mb-3" style="height: 5px">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+    </div>
+</section>
+
+<footer class="w3l-footer-29-main" id="footer">
+     <div class="footer-29 py-3">
+       <div class="container pb-lg-3">
+         <div class="row footer-top-29">
+           <div class="col-lg-4 col-md-6 footer-list-29 footer-1 mt-md-4">
+            <h1 class="navbar-brand"><a style="margin: auto; font-family: 'Poppins'; font-size: 70px; font-weight: bolder; color: #fff;" href="index.html"><img src="{% static 'events/assets/images/pep123_logo.png' %}" alt="" title="" /><span>i</span>Class</a></h1>
+             <!-- <a class="footer-logo mb-md-3 mb-2" href="#url"><img src="{% static 'events/assets/images/logo-icon.png' %}" alt="" />Skill</a> -->
+             <p>We amplify important ideas in mathematics education to help teachers grow their practice and our profession. Lorem ipsum dolor sit
+               amet consectetur adipisicing elit.</p>
+           </div>
+           <div class="col-lg-2 col-md-6 footer-list-29 footer-2 mt-5">
+            <h6 class="footer-title-29">Explore More</h6>
+             <ul>
+               <li><a href="#gallery.html">Gallery</a></li>
+               <li><a href="#courses.html">Courses</a></li>
+               <li><a href="#landing-single.html">Landing Page</a></li>
+               <li><a href="#signup.html">Apply Now</a></li>
+               <li><a href="contact.html">Buy Course Online</a></li>
+             </ul>
+           </div>
+           <div class="col-lg-4 col-md-6 footer-list-29 footer-3 mt-5">
+             <div class="properties">
+               <h6 class="footer-title-29">Recent Post</h6>
+               <a class="d-grid twitter-feed" href="#blog-single.html">
+                 <img src="{% static 'events/assets/images/g1.jpg' %}" class="img-fluid rounded" alt="">
+                 <p>How to get Programming language Cartification in 45 days.</p>
+               </a>
+               <a class="d-grid twitter-feed" href="#blog-single.html">
+                 <img src="{% static 'events/assets/images/g2.jpg' %}" class="img-fluid rounded" alt="">
+                 <p>Top class learning from anywhere Lorem ipsum dolor sit amet.</p>
+               </a>
+               <a class="d-grid twitter-feed" href="#blog-single.html">
+                 <img src="{% static 'events/assets/images/g3.jpg' %}" class="img-fluid rounded" alt="">
+                 <p>Improving lives through learning Lorem ipsum dolor sit amet.</p>
+               </a>
+             </div>
+           </div>
+           <div class="col-lg-2 col-md-6 footer-list-29 footer-4 mt-5">
+            <h6 class="footer-title-29">Quick Links</h6>
+             <ul>
+               <li><a href="index.html">Home</a></li>
+               <li><a href="about.html">About</a></li>
+               <li><a href="services.html">Services</a></li>
+               <li><a href="#blog.html"> Blog</a></li>
+               <li><a href="contact.html">Contact</a></li>
+             </ul>
+           </div>
+         </div>
+       </div>
+     </div>
+     <div id="footers14-block" class="py-3">
+       <div class="container">
+         <div class="footers14-bottom text-center">
+           <div class="social">
+             <a href="#facebook" class="facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
+             <a href="#google" class="google"><span class="fa fa-google-plus" aria-hidden="true"></span></a>
+             <a href="#twitter" class="twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
+             <a href="#instagram" class="instagram"><span class="fa fa-instagram" aria-hidden="true"></span></a>
+             <a href="#youtube" class="youtube"><span class="fa fa-youtube" aria-hidden="true"></span></a>
+           </div>
+           <div class="copyright mt-1">
+             <p>&copy; 2020 Skill. All Rights Reserved | Design by <a href="https://w3layouts.com/">W3Layouts</a></p>
+           </div>
+         </div>
+       </div>
+     </div>
+
+     <!-- move top -->
+     <button onclick="topFunction()" id="movetop" title="Go to top">
+       <span class="fa fa-angle-up" aria-hidden="true"></span>
+     </button>
+     <script>
+       // When the user scrolls down 20px from the top of the document, show the button
+       window.onscroll = function () {
+         scrollFunction()
+       };
+
+       function scrollFunction() {
+         if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+           document.getElementById("movetop").style.display = "block";
+         } else {
+           document.getElementById("movetop").style.display = "none";
+         }
+       }
+
+       // When the user clicks on the button, scroll to the top of the document
+       function topFunction() {
+         document.body.scrollTop = 0;
+         document.documentElement.scrollTop = 0;
+       }
+     </script>
+     <!-- /move top -->
+
+   </footer>
+   <!-- Footer -->
+
+   <!-- jQuery and Bootstrap JS -->
+   <script src="{% static 'events/assets/js/jquery-3.3.1.min.js' %}"></script>
+   <script src="{% static 'events/assets/js/bootstrap.min.js' %}"></script>
+
+   <!-- Template JavaScript -->
+
+   <!-- stats number counter-->
+   <script src="{% static 'events/assets/js/jquery.waypoints.min.js' %}"></script>
+   <script src="{% static 'events/assets/js/jquery.countup.js' %}"></script>
+   <script>
+     $('.counter').countUp();
+   </script>
+   <!-- //stats number counter -->
+
+
+   <!-- testimonials owlcarousel -->
+   <script src="{% static 'events/assets/js/owl.carousel.js' %}"></script>
+
+   <script type="text/javascript">
+          var message_ele = document.getElementById("message_container");
+
+          setTimeout(function(){ 
+             message_ele.style.display = "none"; 
+          }, 3000);
+   </script>
+
+   <!-- script for owlcarousel -->
+   <script>
+     $(document).ready(function () {
+       $('.owl-one').owlCarousel({
+         loop: true,
+         margin: 0,
+         nav: false,
+         responsiveClass: true,
+         autoplay: false,
+         autoplayTimeout: 5000,
+         autoplaySpeed: 1000,
+         autoplayHoverPause: false,
+         responsive: {
+           0: {
+             items: 1,
+             nav: false
+           },
+           480: {
+             items: 1,
+             nav: false
+           },
+           667: {
+             items: 1,
+             nav: false
+           },
+           1000: {
+             items: 1,
+             nav: false
+           }
+         }
+       })
+     })
+   </script>
+   <!-- //script for owlcarousel -->
+   <!-- //testimonials owlcarousel -->
+
+   <!-- script for courses -->
+   <script>
+     $(document).ready(function () {
+       $('.owl-two').owlCarousel({
+         loop: true,
+         margin: 30,
+         nav: false,
+         responsiveClass: true,
+         autoplay: false,
+         autoplayTimeout: 5000,
+         autoplaySpeed: 1000,
+         autoplayHoverPause: false,
+         responsive: {
+           0: {
+             items: 1,
+             nav: false
+           },
+           480: {
+             items: 1,
+             nav: false
+           },
+           667: {
+             items: 2,
+             nav: false
+           },
+           1000: {
+             items: 3,
+             nav: false
+           }
+         }
+       })
+     })
+   </script>
+   <!-- //script for courses -->
+
+   <!-- disable body scroll which navbar is in active -->
+   <script>
+     $(function () {
+       $('.navbar-toggler').click(function () {
+         $('body').toggleClass('noscroll');
+       })
+     });
+   </script>
+   <!-- disable body scroll which navbar is in active -->
+
+   </body>
+
+   </html>

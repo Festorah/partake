@@ -1,0 +1,21 @@
+{% load static %}
+
+Dear {{name}},
+
+Congratulations! Your registration for {{event.name}} has been successfully processed. 
+
+You registered with this email:{{email}}.
+
+If you have any questions leading up to the event, feel free to send a message to us - lifeoasis@hotmail.com.
+
+We look forward to seeing you at {{event}}
+
+<img align="left" src="{% static 'events/assets/images/thank_you.png' %}" alt="" />
+
+SHALOM!
+
+
+Kind Regards,
+{{event.name}} organizing team,
+{{event.organization}}
+lifeoasis@hotmail.com
